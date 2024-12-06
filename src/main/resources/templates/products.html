@@ -10,7 +10,11 @@
 <h1>Product List</h1>
 <ul>
     <li th:each="product : ${products}">
-        <span th:text="'Product: ' + ${products.name}"></span>
+        <span th:text="'Product: ' + ${product.name}"></span>
+        <span th:text="'Price: ' + ${product.price}"></span>
+        <span th:text="'Category: ' + ${product.category.name}"></span>
+        <span th:text="'Quantity: ' + ${product.quantity}"></span>
+        <img th:src="${product.imageUrl}" alt="Product Image" style="width: 100px; height: auto;">
     </li>
 </ul>
 

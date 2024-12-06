@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Products")
-public class Product {
+public class Products {
 
     @Id
     @GeneratedValue
@@ -21,6 +21,21 @@ public class Product {
 
     @Column(name = "quantity")
     private float quantity;
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
     public String getName() {
         return name;
@@ -60,5 +75,13 @@ public class Product {
 
     public void setQuantity(float quantity) {
         this.quantity = quantity;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
