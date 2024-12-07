@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class CartService {
@@ -26,6 +27,10 @@ public class CartService {
 
     public int getTotalCount() {
         return cartItems.values().stream().mapToInt(Integer::intValue).sum();
+    }
+
+    public Set<Integer> getCartItemIds() {
+        return cartItems.keySet();
     }
 
     public int getCountForProduct(int productId) {

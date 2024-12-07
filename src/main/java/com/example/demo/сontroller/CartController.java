@@ -10,6 +10,4 @@ public class CartController {
     public String home() {
         return "warenkorb";
     }
-
-
 }

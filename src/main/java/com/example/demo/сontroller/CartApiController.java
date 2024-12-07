@@ -1,32 +1,34 @@
 package com.example.demo.сontroller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.service.CartService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
 public class CartApiController {
 
-    private int productCount = 0;
+    private final CartService cartService;
 
-    @PostMapping("/addToCart")
-    public int addToCart() {
-        productCount++;
-        return productCount; // Возвращаем текущее количество после добавления
+    @Autowired
+    public CartApiController(CartService cartService) {
+        this.cartService = cartService;
     }
 
-    @GetMapping("/cartCount")
-    public int getCartCount() {
-        return productCount;
+    @PostMapping("/addToCart")
+    public Map<String, Integer> addToCart(@RequestParam("productId") int productId) {
+        cartService.addToCart(productId);
+        int totalCount = cartService.getTotalCount();
+        return Collections.singletonMap("totalCount", totalCount);
     }
 
     @PostMapping("/removeFromCart")
-    public int removeFromCart() {
-        if (productCount > 0) {
-            productCount--;
-        }
-        return productCount;
+    public Map<String, Integer> removeFromCart(@RequestParam("productId") int productId) {
+        cartService.removeFromCart(productId);
+        int totalCount = cartService.getTotalCount();
+        return Collections.singletonMap("totalCount", totalCount);
     }
 }
