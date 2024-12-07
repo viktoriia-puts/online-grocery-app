@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Products;
+import com.example.demo.model.Product;
 import com.example.demo.repository.ProductsRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ public class ProductsService {
         this.productRepository = productRepository;
     }
 
-    public List<Products> getAllProducts() {
+    public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 }

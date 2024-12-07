@@ -16,7 +16,7 @@ public class Category {
 
     // Для связи с таблицей Products (одна категория может быть у многих продуктов)
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Products> products;
+    private List<Product> products;
 
     // Геттеры и сеттеры
     public int getId() {
@@ -35,11 +35,11 @@ public class Category {
         this.name = name;
     }
 
-    public List<Products> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Products> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 }
