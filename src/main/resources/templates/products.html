@@ -28,12 +28,14 @@
             </li>
         </ul>
     </div>
-    <div class="input-group mb-3 w-50 me-3">
-        <input type="search" id="form1" class="form-control" placeholder="Search by name" />
-        <button class="btn btn-primary" type="button">
+
+    <form class="input-group mb-3 w-50 me-3" th:action="@{/products}" method="get">
+        <input type="search" name="search" id="form1" class="form-control" placeholder="Search by name" />
+        <button class="btn btn-primary" type="submit">
             <i class="fas fa-search"></i>
         </button>
-    </div>
+    </form>
+
     <div class="input-group" style="width: auto;">
         <button type="button" class="btn btn-outline-primary" style="height: 39px;">
             <i class="bi bi-cart"></i>
