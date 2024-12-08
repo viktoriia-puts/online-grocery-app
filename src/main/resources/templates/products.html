@@ -18,8 +18,13 @@
             Category
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li th:each="product : ${products}">
-                <a class="dropdown-item" href="#" th:text="${product.category.name}"></a>
+            <li>
+                <!-- Статическая ссылка без параметров категории -->
+                <a class="dropdown-item" th:href="@{/products}" >All</a>
+            </li>
+            <li th:each="cat : ${categories}">
+                <!-- При клике на категорию перейдём на /products?category={id категории} -->
+                <a class="dropdown-item" th:href="@{/products(category=${cat.id})}" th:text="${cat.name}"></a>
             </li>
         </ul>
     </div>
