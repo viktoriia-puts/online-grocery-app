@@ -56,22 +56,21 @@ public class ProductController {
     @GetMapping("/products")
     public String listProducts(@RequestParam(name = "category", required = false) Integer categoryId, Model model) {
         List<Category> categories = categoryRepository.findAll();
-
         List<Product> products;
+
         if (categoryId != null) {
-            // Отфильтровываем продукты по выбранной категории
             products = productRepository.findByCategoryId(categoryId);
         } else {
-            // Показать все продукты, если категория не указана
             products = productRepository.findAll();
         }
 
+        Set<Integer> cartItems = cartService.getCartItemIds(); // Получаем товары из корзины
         model.addAttribute("categories", categories);
         model.addAttribute("products", products);
+        model.addAttribute("cartItems", cartItems); // Добавляем в модель
 
-        int totalCount = cartService.getTotalCount();
-        model.addAttribute("cartCount", totalCount);
-
-        return "products"; // Имя шаблона
+        model.addAttribute("cartCount", cartService.getTotalCount()); // Добавляем счётчик, если нужно
+        return "products";
     }
+
 }
