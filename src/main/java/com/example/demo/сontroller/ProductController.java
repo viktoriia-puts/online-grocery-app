@@ -46,6 +46,10 @@ public class ProductController {
 
         model.addAttribute("products", products);
         model.addAttribute("cartItems", cartItems); // Передаём идентификаторы товаров в корзине
+
+        int totalCount = cartService.getTotalCount();
+        model.addAttribute("cartCount", totalCount);
+
         return "products";
     }
 
@@ -64,6 +68,10 @@ public class ProductController {
 
         model.addAttribute("categories", categories);
         model.addAttribute("products", products);
+
+        int totalCount = cartService.getTotalCount();
+        model.addAttribute("cartCount", totalCount);
+
         return "products"; // Имя шаблона
     }
 }
