@@ -8,6 +8,7 @@ import java.util.Set;
 
 @Service
 public class CartService {
+    //<productid,productCount>
     private Map<Integer, Integer> cartItems = new HashMap<>();
 
     public void addToCart(int productId) {

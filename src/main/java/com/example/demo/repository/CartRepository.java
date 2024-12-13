@@ -1,4 +1,4 @@
 package com.example.demo.repository;
 
-public interface WarenkorbRepository {
+public interface CartRepository {
 }

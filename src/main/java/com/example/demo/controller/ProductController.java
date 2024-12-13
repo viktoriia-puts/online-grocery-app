@@ -1,4 +1,4 @@
-package com.example.demo.сontroller;
+package com.example.demo.controller;
 
 import com.example.demo.model.Category;
 import com.example.demo.repository.CategoryRepository;
@@ -8,10 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import com.example.demo.model.Product;
 import com.example.demo.repository.ProductsRepository;
-import com.example.demo.service.ProductsService;
+import com.example.demo.service.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Set;
@@ -20,7 +19,7 @@ import java.util.Set;
 @Controller
 public class ProductController {
 
-    private final ProductsService productService;
+    private final ProductService productService;
     private final CartService cartService;
 
 
@@ -29,28 +28,10 @@ public class ProductController {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public ProductController(ProductsRepository productRepository, ProductsService productService, CartService cartService) {
+    public ProductController(ProductsRepository productRepository, ProductService productService, CartService cartService) {
         this.productRepository = productRepository;
         this.productService = productService;
         this.cartService = cartService;
-    }
-
-    //method will be called when http://localhost:8080 is requested
-    @GetMapping("/")
-    public String getAllProducts(Model model) {
-        List<Product> products = productRepository.findAll();
-        Set<Integer> cartItems = cartService.getCartItemIds();
-
-        List<Category> categories = categoryRepository.findAll(); // Загружаем категории
-        model.addAttribute("categories", categories);
-
-        model.addAttribute("products", products);
-        model.addAttribute("cartItems", cartItems); // Передаём идентификаторы товаров в корзине
-
-        int totalCount = cartService.getTotalCount();
-        model.addAttribute("cartCount", totalCount);
-
-        return "products";
     }
 
     @GetMapping("/products")

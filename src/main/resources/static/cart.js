@@ -7,18 +7,13 @@ document.addEventListener("DOMContentLoaded", function() {
             e.preventDefault();
             const productId = btn.getAttribute("data-product-id");
 
-            // Отправляем POST запрос на /api/addToCart с productId
+            // Send POST request на /api/addToCart
             fetch("/api/addToCart?productId=" + productId, {
                 method: "POST"
             })
             .then(response => response.json())
             .then(data => {
                 cartCountSpan.textContent = data.totalCount;
-                const cardFooter = btn.closest('.card-footer');
-                const removeBtn = cardFooter.querySelector('.remove-from-cart-btn');
-                removeBtn.style.display = 'inline-block';
-                updateCartCount(data.totalCount);
-
             })
             .catch(error => console.error("Error:", error));
         });
@@ -40,7 +35,20 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(response => response.json())
             .then(data => {
                 cartCountSpan.textContent = data.totalCount;
-                updateCartCount(data.totalCount); // Обновление счётчика
+
+                  // Get product card and quantity element
+                  const productCard = btn.closest(".col");
+                  const quantityElement = productCard.querySelector(".card-text:nth-child(4)");
+
+                  const newQuantity = data.productQuantities[productId];
+                  if (newQuantity === 0) {
+                    productCard.remove();
+                  } else if (quantityElement) {
+                    quantityElement.textContent = `quantity: ${newQuantity}`; // Update the quantity
+                  }
+                  console.log(data.productQuantities);
+                  console.log("Product ID:", productId);
+                 console.log("New Quantity:", data.productQuantities[productId]);
 
             })
             .catch(error => console.error("Error:", error));
@@ -48,23 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-window.addEventListener('pageshow', function(event) {
-    if (event.persisted) {
-        fetch("/api/getCartCount", { method: "GET" })
-            .then(response => response.json())
-            .then(data => {
-                updateCartCount(data.totalCount);
-            })
-            .catch(error => console.error("Error:", error));
-    }
-});
 
-function updateCartCount(newCount) {
-    const cartCountElements = document.querySelectorAll("#cartCount");
-    cartCountElements.forEach(el => {
-        el.textContent = newCount;
-    });
-}
 
 
 
