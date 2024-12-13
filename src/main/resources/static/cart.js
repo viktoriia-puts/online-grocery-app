@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function() {
         btn.addEventListener("click", function(e) {
             e.preventDefault();
             const productId = btn.getAttribute("data-product-id");
-
             // Send POST request на /api/addToCart
             fetch("/api/addToCart?productId=" + productId, {
                 method: "POST"
@@ -14,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(response => response.json())
             .then(data => {
                 cartCountSpan.textContent = data.totalCount;
+                updateCartState();
             })
             .catch(error => console.error("Error:", error));
         });
@@ -37,18 +37,16 @@ document.addEventListener("DOMContentLoaded", function() {
                 cartCountSpan.textContent = data.totalCount;
 
                   // Get product card and quantity element
-                  const productCard = btn.closest(".col");
+                  const productCard = btn.closest(".col-6.mb-3");
                   const quantityElement = productCard.querySelector(".card-text:nth-child(4)");
 
                   const newQuantity = data.productQuantities[productId];
                   if (newQuantity === 0) {
                     productCard.remove();
                   } else if (quantityElement) {
-                    quantityElement.textContent = `quantity: ${newQuantity}`; // Update the quantity
+                        quantityElement.textContent = `quantity: ${newQuantity}`;
                   }
-                  console.log(data.productQuantities);
-                  console.log("Product ID:", productId);
-                 console.log("New Quantity:", data.productQuantities[productId]);
+                    updateCartState();
 
             })
             .catch(error => console.error("Error:", error));
@@ -56,7 +54,27 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    updateCartState();
+});
 
+function updateCartState() {
+    const emptyMessage = document.getElementById('emptyMessage');
+    const placeOrderButton = document.getElementById('placeOrderButton');
 
-
+    fetch("/api/getCartCount", { method: "GET" })
+        .then(response => response.json())
+        .then(data => {
+                console.log("Received cart count:", data.totalCount); // Вывод в консоль
+            if (data.totalCount > 0) {
+            console.log(document.getElementById('emptyMessage'));
+                emptyMessage.style.display = 'none';
+                placeOrderButton.style.display = 'block';
+            } else {
+                emptyMessage.style.display = 'block';
+                placeOrderButton.style.display = 'none';
+            }
+        })
+        .catch(error => console.error("Error:", error));
+}
 

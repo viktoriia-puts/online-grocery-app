@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 const removeBtn = cardFooter.querySelector('.remove-from-cart-btn');
                 removeBtn.style.display = 'inline-block';
                 updateCartCount(data.totalCount);
-
             })
             .catch(error => console.error("Error:", error));
         });
@@ -65,6 +64,3 @@ function updateCartCount(newCount) {
         el.textContent = newCount;
     });
 }
-
-
-
