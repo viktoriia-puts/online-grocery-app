@@ -30,7 +30,7 @@ public class CartApiController {
     public Map<String, Object> removeFromCart(@RequestParam("productId") int productId) {
         cartService.removeFromCart(productId);
         Map<String, Object> response = new HashMap<>();
-        response.put("totalCount", cartService.getTotalCount()); // Общее количество товаров
+        response.put("totalCount", cartService.getTotalCount());
         response.put("productQuantities", Collections.singletonMap(productId, cartService.getCountForProduct(productId)));
         return response;
     }

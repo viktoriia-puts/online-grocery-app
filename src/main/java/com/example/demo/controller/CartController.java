@@ -37,12 +37,12 @@ public class CartController {
     @GetMapping("/cart")
     public String home(@RequestParam(name = "category", required = false) Integer categoryId, @RequestParam(name = "search", required = false) String search, Model model) {
 
-        Set<Integer> cartItems = cartService.getCartItemIds(); // Получаем товары из корзины
+        Set<Integer> cartItems = cartService.getCartItemIds();
         List<Product> products = productRepository.findAllById(cartItems);
 
         model.addAttribute("products", products);
 
-        model.addAttribute("cartCount", cartService.getTotalCount()); // Добавляем счётчик, если нужно
+        model.addAttribute("cartCount", cartService.getTotalCount());
         return "cart";
     }
 }

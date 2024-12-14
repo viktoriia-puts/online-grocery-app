@@ -47,12 +47,12 @@ public class ProductController {
             products = productRepository.findAll();
         }
 
-        Set<Integer> cartItems = cartService.getCartItemIds(); // Получаем товары из корзины
+        Set<Integer> cartItems = cartService.getCartItemIds();
         model.addAttribute("categories", categories);
         model.addAttribute("products", products);
-        model.addAttribute("cartItems", cartItems); // Добавляем в модель
+        model.addAttribute("cartItems", cartItems);
 
-        model.addAttribute("cartCount", cartService.getTotalCount()); // Добавляем счётчик, если нужно
+        model.addAttribute("cartCount", cartService.getTotalCount());
         return "products";
     }
 

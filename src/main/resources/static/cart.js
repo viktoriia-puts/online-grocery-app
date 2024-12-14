@@ -65,7 +65,6 @@ function updateCartState() {
     fetch("/api/getCartCount", { method: "GET" })
         .then(response => response.json())
         .then(data => {
-                console.log("Received cart count:", data.totalCount); // Вывод в консоль
             if (data.totalCount > 0) {
             console.log(document.getElementById('emptyMessage'));
                 emptyMessage.style.display = 'none';

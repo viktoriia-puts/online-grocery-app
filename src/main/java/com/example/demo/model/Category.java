@@ -14,7 +14,6 @@ public class Category {
     @Column(name = "name")
     private String name;
 
-    // Для связи с таблицей Products (одна категория может быть у многих продуктов)
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products;
 
