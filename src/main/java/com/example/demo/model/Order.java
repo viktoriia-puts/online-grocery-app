@@ -26,8 +26,23 @@ public class Order {
         return orderItems;
     }
 
+    public Order() {}
+
+
+    @ManyToOne
+    @JoinColumn(name = "account_id", nullable = true) // Связь может быть null
+    private Account account;
+
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Account getAccount() {
+        return account;
     }
 
     public void setAdress(String adress) {

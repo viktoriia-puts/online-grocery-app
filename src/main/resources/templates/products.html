@@ -4,74 +4,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>List of products</title>
+    <title>List of Products</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
 </head>
 <body>
-
-<div class="d-flex justify-content-center mt-3">
-    <div class="dropdown me-3">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-            Category
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li>
-                <!-- Статическая ссылка без параметров категории -->
-                <a class="dropdown-item" th:href="@{/products}" >All</a>
-            </li>
-            <li th:each="cat : ${categories}">
-                <!-- При клике на категорию перейдём на /products?category={id категории} -->
-                <a class="dropdown-item" th:href="@{/products(category=${cat.id})}" th:text="${cat.name}"></a>
-            </li>
-        </ul>
-    </div>
-
-    <form class="input-group mb-3 w-50 me-3" th:action="@{/products}" method="get">
-        <input type="search" name="search" id="form1" class="form-control" placeholder="Search by name" />
-        <button class="btn btn-primary" type="submit">
-            <i class="fas fa-search"></i>
-        </button>
-    </form>
-
-    <div class="input-group" style="width: auto;">
-        <a href="/cart" type="button" class="btn btn-outline-primary" style="height: 39px;">
-            <i class="bi bi-cart"></i>
-            <span id="cartCount" class="badge bg-secondary" th:text="${cartCount}">0</span>
-        </a>
-    </div>
-</div>
-
-
-<div class="container">
-    <div class="row row-cols-3 g-4">
-        <div class="col" th:each="product : ${products}">
-            <div class="card h-100">
-                <img th:src="${product.imageUrl}" class="card-img-top" alt="Product">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${product.name}"></h5>
-                    <p class="card-text" th:text="'price: ' + ${product.price}"></p>
-                    <p class="card-text" th:text="'categorty: ' + ${product.category.name}"></p>
-                    <p class="card-text" th:text="'quantity: ' + ${product.quantity}"></p>
+<div class="container-fluid my-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-12"> <!-- Карточка на всю ширину -->
+            <div class="card shadow-lg" style="border-radius: 15px;">
+                <div class="card-header text-center bg-primary text-white" style="font-size: 1.5rem; padding: 1.5rem;">
+                    <h3>List of Products</h3>
                 </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary add-to-cart-btn" th:attr="data-product-id=${product.id}">add to cart</a>
-                    <!--<a href="#" class="btn btn-danger remove-from-cart-btn mt-2" th:attr="data-product-id=${product.id}"  style="display: none;">delete from cart</a>
-                   -->
-                    <a href="#" class="btn btn-danger remove-from-cart-btn mt-2"
-                       th:attr="data-product-id=${product.id}"
-                       th:style="${cartItems.contains(product.id)} ? 'display:inline-block;' : 'display:none;'">
-                        delete from cart
-                    </a>
+                <div class="card-body" style="padding: 2rem;">
+                    <!-- Фильтр и поиск -->
+                    <div class="d-flex justify-content-center mb-4">
+                        <div class="dropdown me-3">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                Category
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li>
+                                    <a class="dropdown-item" th:href="@{/products}">All</a>
+                                </li>
+                                <li th:each="cat : ${categories}">
+                                    <a class="dropdown-item" th:href="@{/products(category=${cat.id})}" th:text="${cat.name}"></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <form class="input-group w-50" th:action="@{/products}" method="get">
+                            <input type="search" name="search" id="form1" class="form-control" placeholder="Search by name" />
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                        <a href="/cart" class="btn btn-outline-primary ms-3" style="height: 39px;">
+                            <i class="bi bi-cart"></i>
+                            <span id="cartCount" class="badge bg-secondary" th:text="${cartCount}">0</span>
+                        </a>
+                        <a th:if="${#authentication?.name == 'anonymousUser'}" href="/login" class="btn btn-outline-primary ms-3" style="height: 39px;">
+                            <i class="bi bi-person"></i>
+                        </a>
+                        <a th:if="${#authentication?.name != 'anonymousUser'}" href="/account" class="btn btn-outline-primary ms-3" style="height: 39px;">
+                            <i class="bi bi-person"></i>
+                        </a>
+                    </div>
+                    <!-- Список продуктов -->
+                    <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 g-4" style="padding-left: 60px; padding-right: 60px;">
+                        <div class="col" th:each="product : ${products}">
+                            <div class="card h-100">
+                                <img th:src="${product.imageUrl}" class="card-img-top" alt="Product">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${product.name}"></h5>
+                                    <p class="card-text" th:text="'Price: $' + ${product.price}"></p>
+                                    <p class="card-text" th:text="'Category: ' + ${product.category.name}"></p>
+                                    <p class="card-text" th:text="'Quantity: ' + ${product.quantity}"></p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="#" class="btn btn-primary add-to-cart-btn" th:attr="data-product-id=${product.id}">Add to Cart</a>
+                                    <a href="#" class="btn btn-danger remove-from-cart-btn mt-2" th:attr="data-product-id=${product.id}" th:style="${cartItems.contains(product.id)} ? 'display:inline-block;' : 'display:none;'">
+                                        Delete from Cart
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
+                <div class="card-footer text-center">
+                    <p>Thank you for shopping with us!</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/products.js"></script>

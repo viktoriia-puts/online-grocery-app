@@ -1,22 +1,29 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Account;
 import com.example.demo.model.Order;
 import com.example.demo.model.OrderItem;
+import com.example.demo.service.AccountService;
 import com.example.demo.service.CartService;
 import com.example.demo.service.KasseService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 @Controller
 public class KasseController {
     private final KasseService kasseService;
     private final CartService cartService;
+    private final AccountService accountService;
 
-    public KasseController(KasseService kasseService, CartService cartService) {
+
+    public KasseController(KasseService kasseService, CartService cartService, AccountService accountService) {
         this.kasseService = kasseService;
         this.cartService = cartService;
+        this.accountService = accountService;
     }
 
     @GetMapping("/kasse")
@@ -31,7 +38,8 @@ public class KasseController {
                               @RequestParam String adress,
                               @RequestParam String telephone,
                               @RequestParam String state,
-                              @RequestParam String zip) {
+                              @RequestParam String zip,
+                              Authentication authentication) {
 
         Order order = new Order();
         order.setFirstName(firstName);
@@ -42,6 +50,13 @@ public class KasseController {
         order.setState(state);
         order.setZip(zip);
 
+        // Проверяем, есть ли авторизованный пользователь
+        if (authentication != null && authentication.isAuthenticated() &&
+                !"anonymousUser".equals(authentication.getName())) {
+            Account account = accountService.getAccountByUsername(authentication.getName());
+            order.setAccount(account);
+            order.setFirstName(account.getUsername());
+        }
 
         for (Integer productId : cartService.getCartItemIds()) {
             Integer quantity = cartService.getCountForProduct(productId);
@@ -55,8 +70,6 @@ public class KasseController {
         }
 
         try {
-            System.out.println("saveOrder");
-            System.out.println(order.getFirstName());
             kasseService.saveOrder(order);
         } catch (Exception e) {
             return "error";
