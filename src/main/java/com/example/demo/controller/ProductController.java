@@ -35,15 +35,15 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public String listProducts(@RequestParam(name = "category", required = false) Integer categoryId,@RequestParam(name = "search", required = false) String search, Model model) {
+    public String listProducts(@RequestParam(name = "category", required = false) Integer categoryId, @RequestParam(name = "search", required = false) String search, Model model) {
         List<Category> categories = categoryRepository.findAll();
         List<Product> products;
 
         if (categoryId != null) {
             products = productRepository.findByCategoryId(categoryId);
-        }else if (search != null && !search.trim().isEmpty()) {
+        } else if (search != null && !search.trim().isEmpty()) {
             products = productRepository.findByNameContainingIgnoreCase(search.trim());
-        }  else {
+        } else {
             products = productRepository.findAll();
         }
 
