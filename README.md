@@ -15,7 +15,7 @@ A full‑stack demo web‑application for managing an online grocery store: brow
 
 ```bash
 # 1 · Clone the repository
-git clone https://gitlab.rz.uni-bamberg.de/dsg/thesis/bachelor-thesis-valkova.git
+git clone https://github.com/viktoriia-puts/online-grocery-app.git
 cd bachelor-thesis-valkova
 
 # 2 · Create and fill the .env file
@@ -24,10 +24,7 @@ cp .env.example .env
 # MYSQL_ROOT_PASSWORD=<your-password>
 # SPRING_DATASOURCE_PASSWORD=<your-password>
 
-# 3 · Build the application
-./gradlew clean build
-
-# 4 · Run everything with Docker Compose
+# 3 · Run everything with Docker Compose
 docker compose up --build
 ```
 

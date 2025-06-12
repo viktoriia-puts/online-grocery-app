@@ -31,3 +31,8 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+jar {
+	archiveBaseName.set("online-grocery-app")
+}
+
