@@ -20,7 +20,7 @@ Besides the local Docker Compose setup, the application was deployed and documen
 - **PaaS**: deployment of the Spring Boot application with AWS Elastic Beanstalk and Amazon RDS
 - **CaaS**: container-based deployment using a Docker image, Docker Hub and AWS ECS
 
-The diagrams below summarize the deployment architectures used in the thesis.
+The diagrams below summarize the deployment architectures.
 
 ### IaaS Deployment
 
@@ -29,8 +29,6 @@ The diagrams below summarize the deployment architectures used in the thesis.
 ### PaaS Deployment
 
 ![PaaS deployment architecture](docs/img/paas-deployment.jpg)
-
-In the PaaS variant, the Spring Boot application was uploaded as a JAR file to AWS Elastic Beanstalk. Elastic Beanstalk managed the underlying EC2 instance, while the MySQL database was provided through Amazon RDS. The database connection was configured through environment properties.
 
 ### CaaS Deployment
 
@@ -55,8 +53,7 @@ Now open in your browser:
 
 http://localhost:8080/products
 
-Docker Compose starts both the MySQL database and the Spring Boot application.  
-The database schema and demo data are initialized from `init.sql` when the MySQL volume is created for the first time.
+Docker Compose starts both the MySQL database and the Spring Boot application. The database schema and demo data are initialized from `init.sql` when the MySQL volume is created for the first time.
 
 ## 🔐 Environment Variables
 | Variable | Purpose | Example value |
@@ -67,13 +64,13 @@ For Docker Compose, only `MYSQL_ROOT_PASSWORD` has to be set manually in `.env`.
 
 ## 🛠 Tech Stack
 
-| Layer      | Technology                                                                           |
-|------------|--------------------------------------------------------------------------------------|
-| Language   | Java 21                                                                              |
-| Back-end   | Spring Boot · Spring Data JPA · Spring Security                                      |
-| Database   | MySQL                                                                                |
-| Front-end  | Thymeleaf · Bootstrap 5                                                              |
-| Build/Run  | Gradle · Docker · Docker Compose                                                     |
+| Layer      | Technology                                      |
+|------------|-------------------------------------------------|
+| Language   | Java 21                                         |
+| Back-end   | Spring Boot · Spring Data JPA · Spring Security |
+| Database   | MySQL                                           |
+| Front-end  | Thymeleaf · HTML · Bootstrap 5 · JavaScript     |
+| Build/Run  | Gradle · Docker · Docker Compose                |
 
 ## 🔁 Recreating the Database
 
