@@ -4,6 +4,19 @@ A full-stack demo web application for managing an online grocery store: browse p
 
 The project is fully Dockerized: Docker Compose starts both the Spring Boot application and a MySQL database seeded with sample data.
 
+## ✨ Key Features & Technical Highlights
+
+- Product catalogue with product listing, category filtering and product search
+- Shopping cart functionality with add/remove actions and cart counter updates
+- Cart page with quantity adjustment for selected products
+- Checkout flow with customer data input and order confirmation
+- Persistence of products, users, cart/order data and customer details in MySQL
+- User authentication and registration with Spring Security
+- Server-side rendered UI with Thymeleaf, HTML, Bootstrap and JavaScript
+- Layered Spring Boot architecture using Spring MVC, Spring Data JPA and MySQL
+- Dockerized local setup with Docker Compose for the Spring Boot application and MySQL database
+- AWS deployment comparison using IaaS, PaaS and CaaS approaches
+
 ## 🖼️ Screenshot
 
 | Catalogue                            |
