@@ -24,7 +24,7 @@ The diagrams below summarize the deployment architectures used in the thesis.
 
 ### IaaS Deployment
 
-![IaaS deployment architecture](docs/img/iaas-deployment.jpg)
+![IaaS deployment architecture](docs/img/iaas-deployment-v2.jpg)
 
 ### PaaS Deployment
 
@@ -34,7 +34,7 @@ In the PaaS variant, the Spring Boot application was uploaded as a JAR file to A
 
 ### CaaS Deployment
 
-![CaaS deployment architecture](docs/img/caas-deployment.jpg)
+![CaaS deployment architecture](docs/img/caas-deployment-v2.jpg)
 
 ## 🚀 Quick Start
 
